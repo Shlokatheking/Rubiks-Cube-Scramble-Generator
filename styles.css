@@ -1,0 +1,320 @@
+.container {
+  /* display: inline-flex;
+  justify-content: space-evenly; */
+  background-color: lightpink;
+  height: 200rem;
+  width: 200rem;
+}
+
+.vertical {
+  display: inline-flex;
+  flex-direction: column;
+}
+
+.white {
+  display: inline-flex;
+  flex-direction: row;
+}
+.layer1 {
+  border: 2px solid black;
+  height: 3rem;
+  width: 3rem;
+  display: inline-flex;
+}
+.layer2 {
+  border: 2px solid black;
+  height: 3rem;
+  width: 3rem;
+  display: inline-flex;
+}
+.layer3 {
+  border: 2px solid black;
+  height: 3rem;
+  width: 3rem;
+  display: inline-flex;
+}
+#f00 {
+  background-color: rgb(30, 226, 56);
+}
+#f01 {
+  background-color: rgb(30, 226, 56);
+}
+#f02 {
+  background-color: rgb(30, 226, 56);
+}
+#f10 {
+  background-color: rgb(30, 226, 56);
+}
+#f11 {
+  background-color: rgb(30, 226, 56);
+}
+#f12 {
+  background-color: rgb(30, 226, 56);
+}
+#f20 {
+  background-color: rgb(30, 226, 56);
+}
+#f21 {
+  background-color: rgb(30, 226, 56);
+}
+#f22 {
+  background-color: rgb(30, 226, 56);
+}
+
+#r00 {
+  background-color: red;
+}
+#r01 {
+  background-color: red;
+}
+#r02 {
+  background-color: red;
+}
+#r10 {
+  background-color: red;
+}
+#r11 {
+  background-color: red;
+}
+#r12 {
+  background-color: red;
+}
+#r20 {
+  background-color: red;
+}
+#r21 {
+  background-color: red;
+}
+#r22 {
+  background-color: red;
+}
+#b00 {
+  background-color: blue;
+}
+#b01 {
+  background-color: blue;
+}
+#b02 {
+  background-color: blue;
+}
+#b10 {
+  background-color: blue;
+}
+#b11 {
+  background-color: blue;
+}
+#b12 {
+  background-color: blue;
+}
+#b20 {
+  background-color: blue;
+}
+#b21 {
+  background-color: blue;
+}
+#b22 {
+  background-color: blue;
+}
+
+#l00 {
+  background-color: orange;
+}
+#l01 {
+  background-color: orange;
+}
+#l02 {
+  background-color: orange;
+}
+#l10 {
+  background-color: orange;
+}
+#l11 {
+  background-color: orange;
+}
+#l12 {
+  background-color: orange;
+}
+#l20 {
+  background-color: orange;
+}
+#l21 {
+  background-color: orange;
+}
+#l22 {
+  background-color: orange;
+}
+#w00 {
+  background-color: white;
+}
+#w01 {
+  background-color: white;
+}
+#w02 {
+  background-color: white;
+}
+#w10 {
+  background-color: white;
+}
+#w11 {
+  background-color: white;
+}
+#w12 {
+  background-color: white;
+}
+#w20 {
+  background-color: white;
+}
+#w21 {
+  background-color: white;
+}
+#w22 {
+  background-color: white;
+}
+#bt00 {
+  background-color: yellow;
+}
+#bt01 {
+  background-color: yellow;
+}
+#bt02 {
+  background-color: yellow;
+}
+#bt10 {
+  background-color: yellow;
+}
+#bt11 {
+  background-color: yellow;
+}
+#bt12 {
+  background-color: yellow;
+}
+#bt20 {
+  background-color: yellow;
+}
+#bt21 {
+  background-color: yellow;
+}
+#bt22 {
+  background-color: yellow;
+}
+#scramble {
+  letter-spacing: 7px;
+}
+@mixin sp-layout {
+  @media screen and (max-width: 750px) {
+    @content;
+  }
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: radial-gradient(ellipse at bottom, #0d1d31 0%, #0c0d13 100%);
+  overflow: hidden;
+}
+
+@function random_range($min, $max) {
+  $rand: random();
+  $random_range: $min + floor($rand * (($max - $min) + 1));
+  @return $random_range;
+}
+
+.stars {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 120%;
+  transform: rotate(-45deg);
+}
+
+.star {
+  $star-count: 50;
+  --star-color: var(--primary-color);
+  --star-tail-length: 6em;
+  --star-tail-height: 2px;
+  --star-width: calc(var(--star-tail-length) / 6);
+  --fall-duration: 9s;
+  --tail-fade-duration: var(--fall-duration);
+
+  position: absolute;
+  top: var(--top-offset);
+  left: 0;
+  width: var(--star-tail-length);
+  height: var(--star-tail-height);
+  color: var(--star-color);
+  background: linear-gradient(45deg, currentColor, transparent);
+  border-radius: 50%;
+  filter: drop-shadow(0 0 6px currentColor);
+  transform: translate3d(104em, 0, 0);
+  animation: fall var(--fall-duration) var(--fall-delay) linear infinite,
+    tail-fade var(--tail-fade-duration) var(--fall-delay) ease-out infinite;
+
+  @include sp-layout {
+    // For mobile performance, tail-fade animation will be removed QAQ
+    animation: fall var(--fall-duration) var(--fall-delay) linear infinite;
+  }
+
+  @for $i from 1 through $star-count {
+    &:nth-child(#{$i}) {
+      --star-tail-length: #{random_range(500em, 750em) / 100};
+      --top-offset: #{random_range(0vh, 10000vh) / 100};
+      --fall-duration: #{random_range(6000, 12000s) / 1000};
+      --fall-delay: #{random_range(0, 10000s) / 1000};
+    }
+  }
+
+  &::before,
+  &::after {
+    position: absolute;
+    content: "";
+    top: 0;
+    left: calc(var(--star-width) / -2);
+    width: var(--star-width);
+    height: 100%;
+    background: linear-gradient(45deg, transparent, currentColor, transparent);
+    border-radius: inherit;
+    animation: blink 2s linear infinite;
+  }
+
+  &::before {
+    transform: rotate(45deg);
+  }
+
+  &::after {
+    transform: rotate(-45deg);
+  }
+}
+
+@keyframes fall {
+  to {
+    transform: translate3d(-30em, 0, 0);
+  }
+}
+
+@keyframes tail-fade {
+  0%,
+  50% {
+    width: var(--star-tail-length);
+    opacity: 1;
+  }
+
+  70%,
+  80% {
+    width: 0;
+    opacity: 0.4;
+  }
+
+  100% {
+    width: 0;
+    opacity: 0;
+  }
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0.6;
+  }
+}
